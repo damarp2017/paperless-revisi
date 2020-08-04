@@ -15,7 +15,7 @@ class CreateStoresTable extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->char('id', 10)->unique()->primary();
-            $table->unsignedInteger('owner_id');
+            $table->char('owner_id', 10);
             $table->string('name', 50);
             $table->char('code', 6)->unique();
             $table->text('store_logo');
