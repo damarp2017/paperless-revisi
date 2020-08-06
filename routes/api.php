@@ -18,6 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/', function (){
+    return response()->json([
+       'message' => 'welcome'
+    ]);
+});
+
 // Auth
 Route::prefix('v1')->group(function () {
     // auth owner
@@ -37,5 +43,8 @@ Route::prefix('v1')->group(function () {
         // auth employee
         Route::post('login', 'api\auth_employee\LoginController@login');
         Route::get('store', 'api\employee\StoreController@index')->middleware(['auth:employee-api']);
+
+        Route::get('product', 'api\employee\ProductController@index')->middleware(['auth:employee-api']);
+        Route::post('product', 'api\employee\ProductController@store')->middleware(['auth:employee-api']);
     });
 });

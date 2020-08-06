@@ -21,4 +21,9 @@ class Store extends Model
     {
         return $this->hasMany(Employee::class, 'store_id', 'id');
     }
+
+    public function product()
+    {
+        return $this->hasMany(Product::class, 'store_id', 'id');
+    }
 }
