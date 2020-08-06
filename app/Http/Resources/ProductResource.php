@@ -23,8 +23,15 @@ class ProductResource extends JsonResource
             'quantity' => $this->quantity,
             'discount_by_percent' => $this->discount_by_percent,
             'status' => (int)$this->status ? true : false,
-            'category_id' => $this->category_id,
-            'store_id' => $this->store_id
+            'category' => [
+                'id' => $this->category->id,
+                'name' => $this->category->name,
+            ],
+            'store' => [
+                'id' => $this->store->id,
+                'name' => $this->store->name,
+                'store_logo' => $this->store->store_logo,
+            ]
         ];
     }
 }
