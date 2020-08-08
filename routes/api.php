@@ -34,9 +34,13 @@ Route::prefix('v1')->group(function () {
     Route::post('password/email', 'api\auth\ForgotPasswordController@sendResetLinkEmail');
     Route::post('password/reset', 'api\auth\ResetPasswordController@reset');
 
+    // category
+    Route::get('category', 'api\CategoryController@index');
+
     // owner
     Route::get('store', 'api\StoreController@index')->middleware(['auth:api', 'verified']);
     Route::post('store', 'api\StoreController@store')->middleware(['auth:api', 'verified']);
+
 
 
     Route::prefix('employee')->group(function () {
