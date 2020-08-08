@@ -41,8 +41,6 @@ Route::prefix('v1')->group(function () {
     Route::get('store', 'api\StoreController@index')->middleware(['auth:api', 'verified']);
     Route::post('store', 'api\StoreController@store')->middleware(['auth:api', 'verified']);
 
-
-
     Route::prefix('employee')->group(function () {
         // auth employee
         Route::post('login', 'api\auth_employee\LoginController@login');
@@ -50,5 +48,9 @@ Route::prefix('v1')->group(function () {
 
         Route::get('product', 'api\employee\ProductController@index')->middleware(['auth:employee-api']);
         Route::post('product', 'api\employee\ProductController@store')->middleware(['auth:employee-api']);
+        Route::get('product/{product}', 'api\employee\ProductController@show')->middleware(['auth:employee-api']);
+        Route::get('product/{product}', 'api\employee\ProductController@show')->middleware(['auth:employee-api']);
+        Route::post('product/{product}/image', 'api\employee\ProductController@updateImage')->middleware(['auth:employee-api']);
+        Route::delete('product/{product}', 'api\employee\ProductController@destroy')->middleware(['auth:employee-api']);
     });
 });
