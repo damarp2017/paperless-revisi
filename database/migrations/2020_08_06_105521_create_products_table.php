@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->boolean('status')->default(true);
             $table->integer('quantity')->nullable();
-            $table->decimal('discount_by_percent', 3, 2)->nullable();
+            $table->decimal('discount_by_percent', 4, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
 

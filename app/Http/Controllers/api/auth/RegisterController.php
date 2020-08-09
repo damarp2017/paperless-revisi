@@ -30,7 +30,7 @@ class RegisterController extends Controller
             ], 400);
         }
         $input = $request->all();
-        $input['id'] = $id = IdGenerator::generate(['table' => 'users', 'length' => 10, 'prefix' =>date('ym')]);
+        $input['id'] = IdGenerator::generate(['table' => 'users', 'length' => 10, 'prefix' =>date('ym')]);
         $input['api_token'] = Str::random(80);
         $input['password'] = Hash::make($input['password']);
         $input['image'] = "https://paperless-project.s3-ap-southeast-1.amazonaws.com/default/user-profile.png";

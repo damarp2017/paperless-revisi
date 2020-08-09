@@ -53,4 +53,6 @@ Route::prefix('v1')->group(function () {
         Route::post('product/{product}/image', 'api\employee\ProductController@updateImage')->middleware(['auth:employee-api']);
         Route::delete('product/{product}', 'api\employee\ProductController@destroy')->middleware(['auth:employee-api']);
     });
+
+    Route::post('order', 'api\employee\OrderController@store')->middleware(['auth:employee-api']);
 });
