@@ -62,7 +62,7 @@ class OrderController extends Controller
 
         $order->total_price = array_sum($total_price);
         $order->total_discount = array_sum($total_discount_by_percent);
-        $order->total_price_with_discount = $order->total_price - $order->total_discount_by_percent - $order->discount;
+        $order->total_price_with_discount = $order->total_price - $order->total_discount;
         $order->save();
 
         return response()->json([
