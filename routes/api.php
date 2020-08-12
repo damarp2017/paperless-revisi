@@ -55,4 +55,8 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::post('order', 'api\employee\OrderController@store')->middleware(['auth:employee-api']);
+
+    Route::get('purchasement', 'api\employee\PurchasmentController@index')->middleware(['auth:employee-api', 'verified']);
+    Route::post('purchasement/new', 'api\employee\PurchasmentController@new')->middleware(['auth:employee-api', 'verified']);
+    Route::post('purchasement/restock', 'api\employee\PurchasmentController@restock')->middleware(['auth:employee-api', 'verified']);
 });

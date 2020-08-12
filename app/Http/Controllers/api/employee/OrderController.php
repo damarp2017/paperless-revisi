@@ -72,4 +72,15 @@ class OrderController extends Controller
             'data' => new OrderResource($order),
         ], 201);
     }
+
+    public function history()
+    {
+        $employee = Auth::user();
+        $histories = Order::where('store_id', $employee->store->id)->get();
+        return response()->json([
+            'status' => true,
+            'message' => "berhasil mengambil history order",
+            'data' => new OrderResource($histories),
+        ], 200);
+    }
 }
