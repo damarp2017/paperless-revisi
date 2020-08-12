@@ -54,6 +54,7 @@ class PurchasmentController extends Controller
 
         $purchasement = new Purchasment();
         $purchasement->id = IdGenerator::generate(['table' => 'purchasments', 'length' => 20, 'prefix' => 'PCM' . date('ym') . '-']);
+        $purchasement->store_id = $store->id;
         $purchasement->name = $request->name;
         $purchasement->price = $request->price;
         $purchasement->quantity = $request->quantity;
@@ -89,8 +90,8 @@ class PurchasmentController extends Controller
 
     public function restock(Request $request)
     {
-//        $employee = Auth::user();
-//        $store = Store::where('id', $employee->store->id)->first();
+        $employee = Auth::user();
+        $store = Store::where('id', $employee->store->id)->first();
         $product = Product::where('id', $request->product_id)->first();
 
 //        dd($product);
@@ -113,6 +114,7 @@ class PurchasmentController extends Controller
 
         $purchasement = new Purchasment();
         $purchasement->id = IdGenerator::generate(['table' => 'purchasments', 'length' => 20, 'prefix' => 'PCM' . date('ym') . '-']);
+        $purchasement->store_id = $store->id;
         $purchasement->name = $product->name;
         $purchasement->price = $request->price;
         $purchasement->quantity = $request->quantity;
@@ -121,7 +123,6 @@ class PurchasmentController extends Controller
 
         $product->quantity += $request->quantity;
         $product->update();
-
 
         return response()->json([
             'status' => true,
