@@ -138,4 +138,9 @@ Route::prefix('v1')->group(function () {
         \App\Http\Controllers\api\employee\PurchasmentController::class,
         'restock'
     ])->middleware(['auth:employee-api', 'verified']);
+
+    Route::get('invoice/{order}', [
+        \App\Http\Controllers\api\InvoiceController::class,
+        'invoice'
+    ])->name('invoice');
 });
