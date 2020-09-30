@@ -22,7 +22,7 @@ class OrderDetailResource extends JsonResource
             'image' => $this->image,
             'price' => $this->price,
             'quantity' => $this->quantity,
-            'discount_by_percent' => $this->discount_by_percent,
+            'discount_by_percent' => $this->discount_by_percent ? (float) $this->discount_by_percent : null,
         ];
     }
 }

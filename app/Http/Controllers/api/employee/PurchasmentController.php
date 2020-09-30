@@ -19,11 +19,11 @@ class PurchasmentController extends Controller
     {
         $employee = Auth::user();
         $store = Store::where('id', $employee->store->id)->first();
-
+        $purchasements = Purchasment::where('store_id', $store->id)->get();
         return response()->json([
             'status' => true,
             'message' => "berhasil mengambil data pembelian",
-            'data' => $store,
+            'data' => $purchasements,
         ], 200);
     }
 
@@ -40,7 +40,7 @@ class PurchasmentController extends Controller
             'description' => '',
             'image' => 'required|mimes:jpg,png,jpeg|max:3072',
             'price' => ['required', 'numeric', 'regex:/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/'],
-            'quantity' => '',
+            'quantity' => 'required',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -93,41 +93,46 @@ class PurchasmentController extends Controller
         $employee = Auth::user();
         $store = Store::where('id', $employee->store->id)->first();
         $product = Product::where('id', $request->product_id)->first();
+        if ($store->id == $product->store->id) {
+            $rules = [
+                'product_id' => 'required',
+                'price' => ['required', 'numeric', 'regex:/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/'],
+                'quantity' => 'required',
+                'date' => 'required',
+            ];
 
-//        dd($product);
+            $validator = Validator::make($request->all(), $rules);
 
-        $rules = [
-            'product_id' => 'required',
-            'price' => ['required', 'numeric', 'regex:/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/'],
-            'quantity' => 'required',
-            'date' => 'required',
-        ];
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => $validator->errors()
+                ], 400);
+            }
 
-        $validator = Validator::make($request->all(), $rules);
+            $purchasement = new Purchasment();
+            $purchasement->id = IdGenerator::generate(['table' => 'purchasments', 'length' => 20, 'prefix' => 'PCM' . date('ym') . '-']);
+            $purchasement->store_id = $store->id;
+            $purchasement->name = $product->name;
+            $purchasement->price = $request->price;
+            $purchasement->quantity = $request->quantity;
+            $purchasement->date = $request->date;
+            $purchasement->save();
 
-        if ($validator->fails()) {
+            $product->quantity += $request->quantity;
+            $product->update();
+
+            return response()->json([
+                'status' => true,
+                'message' => "berhasil melakukan restock pada produk",
+                'data' => $purchasement,
+            ], 200);
+        } else {
             return response()->json([
                 'status' => false,
-                'message' => $validator->errors()
+                'message' => "not found",
             ], 400);
         }
 
-        $purchasement = new Purchasment();
-        $purchasement->id = IdGenerator::generate(['table' => 'purchasments', 'length' => 20, 'prefix' => 'PCM' . date('ym') . '-']);
-        $purchasement->store_id = $store->id;
-        $purchasement->name = $product->name;
-        $purchasement->price = $request->price;
-        $purchasement->quantity = $request->quantity;
-        $purchasement->date = $request->date;
-        $purchasement->save();
-
-        $product->quantity += $request->quantity;
-        $product->update();
-
-        return response()->json([
-            'status' => true,
-            'message' => "berhasil melakukan restock pada produk",
-            'data' => $purchasement,
-        ], 200);
     }
 }

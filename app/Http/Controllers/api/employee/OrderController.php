@@ -7,6 +7,7 @@ use App\Http\Resources\OrderResource;
 use App\Order;
 use App\OrderDetail;
 use App\Product;
+use App\Purchasment;
 use App\Store;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Http\Request;
@@ -75,12 +76,16 @@ class OrderController extends Controller
 
     public function history()
     {
-        $employee = Auth::user();
-        $histories = Order::where('store_id', $employee->store->id)->get();
+        $employee = auth()->user();
+        $orders = Order::where('store_id', $employee->store->id)->get();
+        $purchasements = Purchasment::where('store_id', $employee->store->id)->get();
         return response()->json([
             'status' => true,
             'message' => "berhasil mengambil history order",
-            'data' => new OrderResource($histories),
+            'data' => [
+                'orders' => OrderResource::collection($orders),
+                'purchasements' => $purchasements
+            ],
         ], 200);
     }
 }

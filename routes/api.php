@@ -18,45 +18,124 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', function (){
+Route::get('/', function () {
     return response()->json([
-       'message' => 'welcome'
+        'message' => 'welcome'
     ]);
 });
 
 // Auth
 Route::prefix('v1')->group(function () {
     // auth owner
-    Route::get('email/verify/{id}', 'api\auth\VerificationController@verify')->name('api.verification.verify');
-    Route::get('email/resend', 'api\auth\VerificationController@resend')->name('api.verification.resend');
-    Route::post('login', 'api\auth\LoginController@login');
-    Route::post('register', 'api\auth\RegisterController@register');
-    Route::post('password/email', 'api\auth\ForgotPasswordController@sendResetLinkEmail');
-    Route::post('password/reset', 'api\auth\ResetPasswordController@reset');
+    Route::get('email/verify/{id}', [
+        \App\Http\Controllers\api\auth\VerificationController::class,
+        'verify'
+    ])->name('api.verification.verify');
+
+    Route::get('email/resend', [
+        \App\Http\Controllers\api\auth\VerificationController::class,
+        'resend'
+    ])->name('api.verification.resend');
+
+    Route::post('login', [
+        \App\Http\Controllers\api\auth\LoginController::class,
+        'login'
+    ]);
+
+    Route::post('register', [
+        \App\Http\Controllers\api\auth\RegisterController::class,
+        'register'
+    ]);
+
+    Route::post('password/email', [
+        \App\Http\Controllers\api\auth\ForgotPasswordController::class,
+        'sendResetLinkEmail'
+    ]);
+
+    Route::post('password/reset', [
+        \App\Http\Controllers\api\auth\ResetPasswordController::class,
+        'reset'
+    ]);
 
     // category
     Route::get('category', 'api\CategoryController@index');
 
     // owner
-    Route::get('store', 'api\StoreController@index')->middleware(['auth:api', 'verified']);
-    Route::post('store', 'api\StoreController@store')->middleware(['auth:api', 'verified']);
+    Route::get('store', [
+        \App\Http\Controllers\api\StoreController::class,
+        'index'
+    ])->middleware(['auth:api', 'verified']);
+
+    Route::post('store', [
+        \App\Http\Controllers\api\StoreController::class,
+        'store'
+    ])->middleware(['auth:api', 'verified']);
 
     Route::prefix('employee')->group(function () {
         // auth employee
-        Route::post('login', 'api\auth_employee\LoginController@login');
-        Route::get('store', 'api\employee\StoreController@index')->middleware(['auth:employee-api']);
+        Route::post('login', [
+            \App\Http\Controllers\api\auth_employee\LoginController::class,
+            'login'
+        ]);
 
-        Route::get('product', 'api\employee\ProductController@index')->middleware(['auth:employee-api']);
-        Route::post('product', 'api\employee\ProductController@store')->middleware(['auth:employee-api']);
-        Route::get('product/{product}', 'api\employee\ProductController@show')->middleware(['auth:employee-api']);
-        Route::put('product/{product}', 'api\employee\ProductController@update')->middleware(['auth:employee-api']);
-        Route::post('product/{product}/image', 'api\employee\ProductController@updateImage')->middleware(['auth:employee-api']);
-        Route::delete('product/{product}', 'api\employee\ProductController@destroy')->middleware(['auth:employee-api']);
+        Route::get('store', [
+            \App\Http\Controllers\api\employee\StoreController::class,
+            'index'
+        ])->middleware(['auth:employee-api']);
+
+        Route::get('product', [
+            \App\Http\Controllers\api\employee\ProductController::class,
+            'index'
+        ])->middleware(['auth:employee-api']);
+
+        Route::post('product', [
+            \App\Http\Controllers\api\employee\ProductController::class,
+            'store'
+        ])->middleware(['auth:employee-api']);
+
+        Route::get('product/{product}', [
+            \App\Http\Controllers\api\employee\ProductController::class,
+            'show'
+        ])->middleware(['auth:employee-api']);
+
+        Route::put('product/{product}', [
+            \App\Http\Controllers\api\employee\ProductController::class,
+            'update'
+        ])->middleware(['auth:employee-api']);
+
+        Route::post('product/{product}/image', [
+            \App\Http\Controllers\api\employee\ProductController::class,
+            'updateImage'
+        ])->middleware(['auth:employee-api']);
+
+        Route::delete('product/{product}', [
+            \App\Http\Controllers\api\employee\ProductController::class,
+            'destroy'
+        ])->middleware(['auth:employee-api']);
     });
 
-    Route::post('order', 'api\employee\OrderController@store')->middleware(['auth:employee-api']);
+    Route::post('order', [
+        \App\Http\Controllers\api\employee\OrderController::class,
+        'store'
+    ])->middleware(['auth:employee-api']);
 
-    Route::get('purchasement', 'api\employee\PurchasmentController@index')->middleware(['auth:employee-api', 'verified']);
-    Route::post('purchasement/new', 'api\employee\PurchasmentController@new')->middleware(['auth:employee-api', 'verified']);
-    Route::post('purchasement/restock', 'api\employee\PurchasmentController@restock')->middleware(['auth:employee-api', 'verified']);
+    Route::get('order/history', [
+        \App\Http\Controllers\api\employee\OrderController::class,
+        'history'
+    ])->middleware(['auth:employee-api']);
+
+    Route::get('purchasement', [
+        \App\Http\Controllers\api\employee\PurchasmentController::class,
+        'index'
+    ])->middleware(['auth:employee-api', 'verified']);
+
+    Route::post('purchasement/new', [
+        \App\Http\Controllers\api\employee\PurchasmentController::class,
+        'new'
+    ])->middleware(['auth:employee-api', 'verified']);
+
+    Route::post('purchasement/restock', [
+        \App\Http\Controllers\api\employee\PurchasmentController::class,
+        'restock'
+    ])->middleware(['auth:employee-api', 'verified']);
 });

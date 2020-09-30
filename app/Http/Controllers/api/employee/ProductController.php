@@ -69,6 +69,7 @@ class ProductController extends Controller
             'price' => ['required', 'numeric', 'regex:/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/'],
             'status' => 'required',
             'quantity' => '',
+            'image' => 'required|mimes:jpg,png,jpeg|max:3072'
         ];
 
         $validator = Validator::make($request->all(), $rules);
