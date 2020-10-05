@@ -53,4 +53,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new ApiResetPasswordNotification($token));
     }
+
+    public function store()
+    {
+        return $this->hasMany(Store::class, 'owner_id', 'id');
+    }
 }

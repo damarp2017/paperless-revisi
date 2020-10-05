@@ -124,6 +124,11 @@ Route::prefix('v1')->group(function () {
         'history'
     ])->middleware(['auth:employee-api']);
 
+    Route::get('history/all', [
+        \App\Http\Controllers\api\HistoryController::class,
+        'all'
+    ])->middleware(['auth:api', 'verified']);
+
     Route::get('purchasement', [
         \App\Http\Controllers\api\employee\PurchasmentController::class,
         'index'
