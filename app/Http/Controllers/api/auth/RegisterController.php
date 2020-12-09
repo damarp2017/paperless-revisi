@@ -33,7 +33,7 @@ class RegisterController extends Controller
         $input['id'] = IdGenerator::generate(['table' => 'users', 'length' => 10, 'prefix' =>date('ym')]);
         $input['api_token'] = Str::random(80);
         $input['password'] = Hash::make($input['password']);
-        $input['image'] = "https://paperless-project.s3-ap-southeast-1.amazonaws.com/default/user-profile.png";
+        $input['image'] = "https://res.cloudinary.com/damarp2017/image/upload/v1607499791/default/user_wttbnf.png";
         $user = User::create($input);
         $user->sendApiEmailVerificationNotification();
         $message = 'Email verification sent, please check your email';

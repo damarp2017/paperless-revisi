@@ -92,11 +92,8 @@ class ProductController extends Controller
         }
 
         if ($request->image != null) {
-            $file = $request->file('image');
-            $file_name = date('ymdHis') . "-" . $file->getClientOriginalName();
-            $file_path = 'product/' . $file_name;
-            Storage::disk('s3')->put($file_path, file_get_contents($file));
-            $product->image = Storage::disk('s3')->url($file_path, $file_name);
+            $response = cloudinary()->upload($request->file('image')->getRealPath(), array("folder" => "products", "overwrite" => TRUE, "resource_type" => "image"))->getSecurePath();
+            $product->image = $response;
         }
 
         $product->description = $request->description;
@@ -175,11 +172,8 @@ class ProductController extends Controller
                 'image' => 'mimes:jpg,png,jpeg|max:3072',
             ];
             if ($request->image != null) {
-                $file = $request->file('image');
-                $file_name = date('ymdHis') . "-" . $file->getClientOriginalName();
-                $file_path = 'product/' . $file_name;
-                Storage::disk('s3')->put($file_path, file_get_contents($file));
-                $product->image = Storage::disk('s3')->url($file_path, $file_name);
+                $response = cloudinary()->upload($request->file('image')->getRealPath(), array("folder" => "products", "overwrite" => TRUE, "resource_type" => "image"))->getSecurePath();
+                $product->image = $response;
             }
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {

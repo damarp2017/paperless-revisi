@@ -19,7 +19,7 @@ class StoreSeeder extends Seeder
         Store::create([
             'id' => 'STR-000001',
             'name' => 'Toko Damar',
-            'store_logo' => 'https://paperless-project.s3.ap-southeast-1.amazonaws.com/default/store-logo.png',
+            'store_logo' => 'https://res.cloudinary.com/damarp2017/image/upload/v1607499791/default/store_qnl6rf.png',
             'code' => 'KdeDMR',
             'phone' => '+628996308805',
             'address' => 'Jalan Sunan Kalijaga No 17, Kaligangsa Wetan, Brebes',
@@ -47,7 +47,7 @@ class StoreSeeder extends Seeder
         Store::create([
             'id' => 'STR-000002',
             'name' => 'Toko Prieyuda',
-            'store_logo' => 'https://paperless-project.s3.ap-southeast-1.amazonaws.com/default/store-logo.png',
+            'store_logo' => 'https://res.cloudinary.com/damarp2017/image/upload/v1607499791/default/store_qnl6rf.png',
             'code' => 'KodYDH',
             'phone' => '+628996308808',
             'address' => 'Jalan Karang Djati',
