@@ -17,9 +17,13 @@ class HistoryController extends Controller
     {
         $owner = auth()->user();
         $stores = Store::where('owner_id', $owner->id)->get();
+        $list_store = $stores->map(function ($store) {
+            return collect($store->toArray())->only('id')->all();
+        });
+
         $orders = Order::all();
         $purchasements = Purchasment::all();
-        $orders = $orders->intersect(Order::whereIn('store_id', ['STR-000003', 'STR-000004'])->get());
+        $orders = $orders->intersect(Order::whereIn('store_id', $list_store)->get());
         $purchasements = $purchasements->intersect(Purchasment::whereIn('store_id', ['STR-000003', 'STR-000004'])->get());
         return response()->json([
             'status' => true,
