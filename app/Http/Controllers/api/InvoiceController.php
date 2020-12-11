@@ -7,6 +7,7 @@ use App\Http\Resources\InvoiceResource;
 use App\Order;
 use App\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use PDF;
@@ -26,7 +27,9 @@ class InvoiceController extends Controller
             'status' => true,
             'message' => "OK",
             'data' => [
-                'url' => URL::to("uploads/".$filepath)
+//                'url' => URL::to("uploads/".$filepath)
+                'url' => App::environment('local') ?
+                    URL::to("uploads/" . $filepath) : URL::to("public/uploads/" . $filepath)
             ]
         ]);
     }

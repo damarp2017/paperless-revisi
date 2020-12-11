@@ -23,7 +23,7 @@ class StoreSeeder extends Seeder
             'code' => 'KdeDMR',
             'phone' => '+628996308805',
             'address' => 'Jalan Sunan Kalijaga No 17, Kaligangsa Wetan, Brebes',
-            'owner_id' => '2008000001'
+            'owner_id' => '2012000001'
         ]);
 
         Employee::create([
@@ -51,7 +51,7 @@ class StoreSeeder extends Seeder
             'code' => 'KodYDH',
             'phone' => '+628996308808',
             'address' => 'Jalan Karang Djati',
-            'owner_id' => '2008000002'
+            'owner_id' => '2012000002'
         ]);
 
         Employee::create([
