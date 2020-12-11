@@ -28,8 +28,7 @@ class InvoiceController extends Controller
             'message' => "OK",
             'data' => [
 //                'url' => URL::to("uploads/".$filepath)
-                'url' => App::environment('local') ?
-                    URL::to("uploads/" . $filepath) : URL::to("public/uploads/" . $filepath)
+                'url' => App::environment() == "local" ? URL::to("uploads/".$filepath) : URL::to("public/uploads/".$filepath)
             ]
         ]);
     }

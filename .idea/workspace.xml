@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="004c6b42-1043-48e7-af6f-ea9c56909e3e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/InvoiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/InvoiceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/StoreSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/StoreSeeder.php" afterDir="false" />
-    </list>
+    <list default="true" id="004c6b42-1043-48e7-af6f-ea9c56909e3e" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,7 +231,7 @@
       <workItem from="1601371409417" duration="21379000" />
       <workItem from="1601869035582" duration="6505000" />
       <workItem from="1607493500585" duration="11947000" />
-      <workItem from="1607604303096" duration="6858000" />
+      <workItem from="1607604303096" duration="7126000" />
     </task>
     <servers />
   </component>
