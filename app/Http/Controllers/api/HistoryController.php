@@ -24,7 +24,7 @@ class HistoryController extends Controller
         $orders = Order::all();
         $purchasements = Purchasment::all();
         $orders = $orders->intersect(Order::whereIn('store_id', $list_store)->get());
-        $purchasements = $purchasements->intersect(Purchasment::whereIn('store_id', ['STR-000003', 'STR-000004'])->get());
+        $purchasements = $purchasements->intersect(Purchasment::whereIn('store_id', $list_store)->get());
         return response()->json([
             'status' => true,
             'message' => 'riwayat penjualan dan pembelian ditemukan',
